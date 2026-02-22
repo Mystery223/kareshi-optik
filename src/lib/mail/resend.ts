@@ -1,6 +1,10 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) return null;
+    return new Resend(apiKey);
+}
 
 interface MailData {
     customerName: string;
@@ -19,7 +23,9 @@ export async function sendBookingConfirmation({
     serviceType,
     email,
 }: MailData) {
-    if (!process.env.RESEND_API_KEY || !email) return;
+    if (!email) return;
+    const resend = getResendClient();
+    if (!resend) return;
 
     try {
         await resend.emails.send({
@@ -57,7 +63,9 @@ export async function sendAdminNotification({
     time,
     serviceType,
 }: Omit<MailData, 'email'>) {
-    if (!process.env.RESEND_API_KEY || !process.env.ADMIN_EMAIL) return;
+    if (!process.env.ADMIN_EMAIL) return;
+    const resend = getResendClient();
+    if (!resend) return;
 
     try {
         await resend.emails.send({
