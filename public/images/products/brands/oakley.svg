@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e1520"/>
+      <stop offset="100%" stop-color="#162f4b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <rect x="255" y="545" width="290" height="230" rx="90" stroke="#dff3ff" stroke-width="24"/>
+  <rect x="655" y="545" width="290" height="230" rx="90" stroke="#dff3ff" stroke-width="24"/>
+  <rect x="545" y="638" width="110" height="18" rx="9" fill="#dff3ff"/>
+  <path d="M255 650H175" stroke="#dff3ff" stroke-width="20" stroke-linecap="round"/>
+  <path d="M1025 650H945" stroke="#dff3ff" stroke-width="20" stroke-linecap="round"/>
+  <text x="90" y="1230" fill="#ffffff" font-size="92" font-family="Arial, sans-serif" font-weight="700">Oakley</text>
+  <text x="90" y="1290" fill="#acd3ef" font-size="30" font-family="Arial, sans-serif" letter-spacing="5">PERFORMANCE OPTICS</text>
+</svg>

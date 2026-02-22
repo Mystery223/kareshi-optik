@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a2a2d"/>
+      <stop offset="100%" stop-color="#6d6673"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <circle cx="430" cy="690" r="165" stroke="#f7f7f7" stroke-width="24"/>
+  <circle cx="770" cy="690" r="165" stroke="#f7f7f7" stroke-width="24"/>
+  <rect x="560" y="655" width="80" height="20" rx="10" fill="#f7f7f7"/>
+  <path d="M260 680H180" stroke="#f7f7f7" stroke-width="18" stroke-linecap="round"/>
+  <path d="M1020 680H940" stroke="#f7f7f7" stroke-width="18" stroke-linecap="round"/>
+  <text x="90" y="1230" fill="#ffffff" font-size="84" font-family="Arial, sans-serif" font-weight="700">Kareshi Optik</text>
+  <text x="90" y="1290" fill="#e4dde7" font-size="30" font-family="Arial, sans-serif" letter-spacing="5">CURATED FRAME COLLECTION</text>
+</svg>

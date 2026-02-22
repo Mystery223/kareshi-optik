@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  
+  --ink: #1A1A1A;
+  --ink-mid: #4A4A4A;
+  --ink-light: #8A8A8A;
+  
+  --paper: #FAFAF8;
+  --paper-mid: #F2F0EC;
+  --paper-warm: #EDE9E0;
+  
+  --rose: #C4748A;
+  --rose-light: #E8B4C2;
+  --rose-pale: #F9EEF1;
+  
+  --sage: #7A9E8A;
+  --sage-light: #B8D4C4;
+  
+  --border: #E0DDD8;
+  --border-dark: #C8C4BC;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-ink: var(--ink);
+  --color-ink-mid: var(--ink-mid);
+  --color-ink-light: var(--ink-light);
+  
+  --color-paper: var(--paper);
+  --color-paper-mid: var(--paper-mid);
+  --color-paper-warm: var(--paper-warm);
+  
+  --color-rose: var(--rose);
+  --color-rose-light: var(--rose-light);
+  --color-rose-pale: var(--rose-pale);
+  
+  --color-sage: var(--sage);
+  --color-sage-light: var(--sage-light);
+  
+  --color-border: var(--border);
+  --color-border-dark: var(--border-dark);
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper-mid);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-light);
 }
