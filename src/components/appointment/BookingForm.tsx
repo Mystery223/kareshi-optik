@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { appointmentSchema, type AppointmentFormValues } from "@/lib/validations/appointment";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner"; // Assuming sonner is available or can be replaced with alert/nothing
+import { toast } from "sonner";
 import RevealWrapper from "@/components/ui/RevealWrapper";
 
 interface AvailableSlot {
