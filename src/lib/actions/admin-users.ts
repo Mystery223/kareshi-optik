@@ -16,7 +16,8 @@ function toQuery(path: string, key: "success" | "error", value: string) {
 
 async function requireAdminSession() {
   const session = await auth();
-  if (!session || !isAdmin(session.user.role)) {
+  const role = session?.user?.role;
+  if (!session || !isAdmin(role)) {
     redirect("/admin?error=forbidden");
   }
   return session;
@@ -68,6 +69,7 @@ export async function createInternalUserAction(formData: FormData) {
 
 export async function updateInternalUserRoleAction(formData: FormData) {
   const session = await requireAdminSession();
+  const actorId = session.user?.id;
 
   const targetUserId = String(formData.get("targetUserId") || "").trim();
   const nextRole = String(formData.get("nextRole") || "").trim();
@@ -89,7 +91,7 @@ export async function updateInternalUserRoleAction(formData: FormData) {
   if (!targetUser) {
     redirect(toQuery("/admin/users", "error", "user-not-found"));
   }
-  if (targetUser.id === session.user.id) {
+  if (actorId && targetUser.id === actorId) {
     redirect(toQuery("/admin/users", "error", "cannot-change-own-role"));
   }
   if (targetUser.role === nextRole) {
@@ -117,6 +119,7 @@ export async function updateInternalUserRoleAction(formData: FormData) {
 
 export async function toggleInternalUserStatusAction(formData: FormData) {
   const session = await requireAdminSession();
+  const actorId = session.user?.id;
 
   const targetUserId = String(formData.get("targetUserId") || "").trim();
   const nextStatus = String(formData.get("nextStatus") || "").trim();
@@ -138,7 +141,7 @@ export async function toggleInternalUserStatusAction(formData: FormData) {
   if (!targetUser) {
     redirect(toQuery("/admin/users", "error", "user-not-found"));
   }
-  if (targetUser.id === session.user.id && nextStatus === "inactive") {
+  if (actorId && targetUser.id === actorId && nextStatus === "inactive") {
     redirect(toQuery("/admin/users", "error", "cannot-deactivate-own-account"));
   }
 

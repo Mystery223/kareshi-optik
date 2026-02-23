@@ -30,7 +30,7 @@ npm install
 cp .env.example .env.local
 ```
 
-3. Isi nilai pada `.env.local` (minimal: `DATABASE_URL`, `NEXTAUTH_SECRET`)
+3. Isi nilai pada `.env.local` (minimal: `DATABASE_URL`, `NEXTAUTH_SECRET` / `AUTH_SECRET`)
 
 4. Jalankan app
 
@@ -49,6 +49,9 @@ npm run dev
 - `npm run build` -> production build
 - `npm run start` -> run production server
 - `npm run lint` -> lint codebase
+- `npm run db:compat` -> patch kompatibilitas DB legacy
+- `npm run db:baseline` -> sinkronkan histori drizzle migration
+- `npm run db:migrate` -> apply migration drizzle
 - `npm run seed:test-data` -> seed akun test
 - `npm run seed:products-dummy` -> seed katalog dummy
 

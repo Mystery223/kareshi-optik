@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "db:compat": "tsx scripts/db-compat-patch.ts",
+    "db:baseline": "tsx scripts/db-baseline.ts",
+    "db:migrate": "drizzle-kit migrate",
     "seed:test-data": "tsx scripts/seed-test-data.ts",
     "seed:products-dummy": "tsx scripts/seed-products-dummy.ts"
   },

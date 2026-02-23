@@ -8,6 +8,8 @@ import { z } from "zod";
 import { UserRole } from "./types";
 import { checkRateLimit, logRateLimitBlocked } from "@/lib/cache/redis";
 
+const authSecret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+
 declare module "next-auth" {
     interface User {
         role?: UserRole;
@@ -21,6 +23,8 @@ declare module "next-auth" {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+    secret: authSecret,
+    trustHost: true,
     providers: [
         Credentials({
             async authorize(credentials, request) {
@@ -114,6 +118,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return token;
         },
         async session({ session, token }) {
+            if (!session.user) {
+                return session;
+            }
             if (token) {
                 session.user.id = token.id as string;
                 session.user.role = (token.role as UserRole | undefined) ?? "customer";

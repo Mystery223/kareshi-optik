@@ -21,6 +21,10 @@ Set semua variable berikut di Vercel: `Project -> Settings -> Environment Variab
   contoh: `https://your-domain.com`
 - `NEXTAUTH_SECRET`  
   generate random secret yang kuat.
+- `AUTH_SECRET`  
+  isi sama dengan `NEXTAUTH_SECRET` (untuk kompatibilitas Auth.js v5).
+- `AUTH_TRUST_HOST`  
+  set `true` di Vercel.
 
 ### Redis (Cache + Rate Limiting)
 
@@ -66,12 +70,16 @@ Jalankan migration ke DB production.
 Contoh dari lokal (pastikan `DATABASE_URL` mengarah ke DB production):
 
 ```bash
-npx drizzle-kit migrate
+npm run db:compat
+npm run db:baseline
+npm run db:migrate
 ```
 
 Catatan:
 - Jangan jalankan seed dummy di production kecuali memang untuk demo.
 - Jika butuh data demo terkontrol, jalankan manual dan dokumentasikan.
+- `db:compat` wajib jika DB production awalnya dibuat dari dump SQL lama (`db_kareshi.sql` versi lama).
+- `db:baseline` menandai migration lama agar `drizzle-kit` tidak menjalankan ulang SQL yang sudah ada.
 
 ## 5) Deploy Flow yang Direkomendasikan
 
@@ -102,10 +110,12 @@ Catatan:
 ### A. Login gagal terus
 - Cek `NEXTAUTH_URL` benar.
 - Cek `NEXTAUTH_SECRET` sudah di-set.
+- Cek `AUTH_SECRET` dan `AUTH_TRUST_HOST=true`.
 - Cek data user/password hash di DB production.
 
 ### B. Koleksi/detail produk error
 - Cek `DATABASE_URL`.
+- Jalankan berurutan: `npm run db:compat`, `npm run db:baseline`, `npm run db:migrate`.
 - Pastikan migration products/brands/categories/variants/reviews sudah applied.
 
 ### C. Redis tidak aktif

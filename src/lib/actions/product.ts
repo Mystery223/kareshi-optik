@@ -10,7 +10,8 @@ import { canDeleteProduct } from "@/lib/auth/roles";
 
 export async function deleteProductAction(id: string) {
     const session = await auth();
-    if (!session || !canDeleteProduct(session.user.role)) {
+    const role = session?.user?.role;
+    if (!session || !canDeleteProduct(role)) {
         return { success: false, error: "Akses ditolak. Hanya admin yang dapat menghapus produk." };
     }
 

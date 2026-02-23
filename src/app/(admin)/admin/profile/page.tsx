@@ -7,12 +7,17 @@ import { isAdminOrStaff } from "@/lib/auth/roles";
 
 export default async function AdminProfilePage() {
   const session = await auth();
+  const role = session?.user?.role;
+  const image = session?.user?.image ?? null;
+  const name = session?.user?.name ?? "-";
+  const email = session?.user?.email ?? "-";
 
-  if (!session || !isAdminOrStaff(session.user.role)) {
+  if (!session || !isAdminOrStaff(role)) {
     redirect("/login");
   }
 
-  const roleLabel = session.user.role === "admin" ? "Administrator" : "Staff";
+  const safeRole = role ?? "staff";
+  const roleLabel = safeRole === "admin" ? "Administrator" : "Staff";
 
   return (
     <div className="p-8 md:p-12 space-y-10">
@@ -26,22 +31,22 @@ export default async function AdminProfilePage() {
       <RevealWrapper delay={0.1} className="rounded-[32px] border border-border/50 bg-paper-mid p-8 md:p-10">
         <div className="grid gap-8 md:grid-cols-[180px_1fr]">
           <div className="space-y-3">
-            <AvatarUploader role={session.user.role} currentImage={session.user.image} name={session.user.name} />
+            <AvatarUploader role={safeRole} currentImage={image} name={name} />
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-ink-light">{roleLabel}</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-ink-light">Nama</p>
-            <p className="mt-2 text-xl font-bold text-ink">{session.user.name || "-"}</p>
+            <p className="mt-2 text-xl font-bold text-ink">{name}</p>
           </div>
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-ink-light">Email</p>
-            <p className="mt-2 text-xl font-bold text-ink">{session.user.email || "-"}</p>
+            <p className="mt-2 text-xl font-bold text-ink">{email}</p>
           </div>
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-ink-light">Role</p>
-            <p className="mt-2 text-xl font-bold text-ink uppercase">{session.user.role}</p>
+            <p className="mt-2 text-xl font-bold text-ink uppercase">{safeRole}</p>
           </div>
           </div>
         </div>

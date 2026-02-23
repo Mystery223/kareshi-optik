@@ -16,7 +16,15 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  if (isAdminOrStaff(session.user.role)) {
+  const userId = session.user?.id;
+  const userRole = session.user?.role ?? "customer";
+  const userName = session.user?.name ?? "Pengguna";
+
+  if (!userId) {
+    redirect("/login");
+  }
+
+  if (isAdminOrStaff(userRole)) {
     redirect("/admin");
   }
 
@@ -24,12 +32,12 @@ export default async function DashboardPage() {
   const [appointmentsCount] = await db
     .select({ val: count() })
     .from(appointments)
-    .where(eq(appointments.customerId, session.user.id));
+    .where(eq(appointments.customerId, userId));
 
   const userAppointments = await db
     .select()
     .from(appointments)
-    .where(eq(appointments.customerId, session.user.id))
+    .where(eq(appointments.customerId, userId))
     .orderBy(desc(appointments.appointmentDate))
     .limit(5);
 
@@ -41,7 +49,7 @@ export default async function DashboardPage() {
           <RevealWrapper className="space-y-4">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-rose">Customer Portal</p>
             <h1 className="font-serif text-5xl md:text-7xl font-bold text-ink">
-              Halo, <span className="italic">{session.user.name?.split(" ")[0]}</span>
+              Halo, <span className="italic">{userName.split(" ")[0]}</span>
             </h1>
           </RevealWrapper>
 

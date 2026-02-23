@@ -20,7 +20,8 @@ function slugify(input: string) {
 async function updateProductAction(formData: FormData) {
     "use server";
     const session = await auth();
-    if (!session || !isAdminOrStaff(session.user.role)) {
+    const role = session?.user?.role;
+    if (!session || !isAdminOrStaff(role)) {
         redirect("/login");
     }
 
@@ -107,7 +108,8 @@ interface AdminEditProductPageProps {
 
 export default async function AdminEditProductPage({ params, searchParams }: AdminEditProductPageProps) {
     const session = await auth();
-    if (!session || !isAdminOrStaff(session.user.role)) {
+    const role = session?.user?.role;
+    if (!session || !isAdminOrStaff(role)) {
         redirect("/login");
     }
 

@@ -20,7 +20,9 @@ async function createBlogPostAction(formData: FormData) {
   "use server";
 
   const session = await auth();
-  if (!session || !isAdminOrStaff(session.user.role)) {
+  const role = session?.user?.role;
+  const authorId = session?.user?.id;
+  if (!session || !authorId || !isAdminOrStaff(role)) {
     redirect("/login");
   }
 
@@ -55,7 +57,7 @@ async function createBlogPostAction(formData: FormData) {
       content,
       coverImage: coverImage || null,
       category: category || null,
-      authorId: session.user.id,
+      authorId,
       tags: tags.length > 0 ? tags : null,
       isPublished,
       publishedAt: isPublished ? new Date() : null,

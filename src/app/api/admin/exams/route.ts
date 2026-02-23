@@ -7,8 +7,10 @@ import { isAdminOrStaff } from "@/lib/auth/roles";
 
 export async function POST(req: Request) {
     const session = await auth();
+    const role = session?.user?.role;
+    const userId = session?.user?.id;
 
-    if (!session || !isAdminOrStaff(session.user.role)) {
+    if (!session || !userId || !isAdminOrStaff(role)) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -57,7 +59,7 @@ export async function POST(req: Request) {
             await db.insert(eyeExamHistory).values({
                 customerId,
                 appointmentId,
-                optometristId: session.user.id, // Assuming staff ID matches optometrist ID or name
+                optometristId: userId, // Assuming staff ID matches optometrist ID or name
                 examDate: new Date().toISOString().split('T')[0],
                 reSphere,
                 reCylinder,

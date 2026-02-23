@@ -49,7 +49,8 @@ function toFeedbackMessage(type: "success" | "error", code?: string) {
 
 export default async function AdminUsersPage({ searchParams }: AdminUsersPageProps) {
   const session = await auth();
-  if (!session || !isAdmin(session.user.role)) {
+  const role = session?.user?.role;
+  if (!session || !isAdmin(role)) {
     redirect("/admin?error=forbidden");
   }
 
